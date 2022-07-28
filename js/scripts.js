@@ -40,18 +40,18 @@ window.addEventListener('load', function(){
 		}
 	}
 
-	arrowTop.onclick = function() {
+	arrowTop.addEventListener('click', function(){
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth'
 		});
 		
 		// после scrollTo возникнет событие "scroll", так что стрелка автоматически скроется
-	  };
+	  });
   
 	  window.addEventListener('scroll', function() {
-		arrowTop.hidden = (window.pageYOffset < document.documentElement.clientHeight);
-		 
+		if (window.pageYOffset < document.documentElement.clientHeight) {
+			arrowTop.hidden = true
+		} else arrowTop.hidden = false
 	  });
-
 });
