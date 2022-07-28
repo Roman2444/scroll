@@ -1,10 +1,8 @@
 window.addEventListener('load', function(){
 	
 	let menu = document.querySelector('.menu');
-	
 	let arrowTop = document.querySelector('#arrowTop');
 	arrowTop.hidden = true
-
 
 	menu.addEventListener('click', function(e){
 		let link = e.target;
@@ -50,7 +48,7 @@ window.addEventListener('load', function(){
   
 	  window.addEventListener('scroll', function() {
 		let posTop = window.pageYOffset;
-		if (posTop < 600) {
+		if (posTop < document.documentElement.clientHeight) {
 			arrowTop.hidden = true
 		} else arrowTop.hidden = false
 
