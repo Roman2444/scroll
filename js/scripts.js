@@ -1,8 +1,8 @@
 window.addEventListener('load', function(){
 	
-
 	let menu = document.querySelector('.menu');
 	let posTop = window.pageYOffset;
+	let arrowTop = document.querySelector('#arrowTop');
 	if (posTop>892){ 
 	alert(posTop) 
 	}
@@ -39,5 +39,19 @@ window.addEventListener('load', function(){
 			/* window.scrollTo(0, pos); */
 		}
 	}
+
+	arrowTop.onclick = function() {
+		window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		});
+		
+		// после scrollTo возникнет событие "scroll", так что стрелка автоматически скроется
+	  };
+  
+	  window.addEventListener('scroll', function() {
+		arrowTop.hidden = (window.pageYOffset < document.documentElement.clientHeight);
+		 
+	  });
 
 });
