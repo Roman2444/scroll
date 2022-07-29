@@ -1,19 +1,16 @@
 window.addEventListener('load', function(){
 	
 	let menu = document.querySelector('.menu');
+	let links = menu.querySelectorAll('a') 
 	let arrowTop = document.querySelector('#arrowTop');
 	arrowTop.hidden = true
 
 	menu.addEventListener('click', function(e){
 		let link = e.target;
-		let posTop = window.pageYOffset;
-		console.log(posTop)
 
 		if(link.classList.contains('menu__link')){
 			e.preventDefault();
 
-			menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
-			link.classList.add('menu__link-active');
 			scrollToTarget(link.hash);
 		}
 	});
@@ -42,7 +39,6 @@ window.addEventListener('load', function(){
 			top: 0,
 			behavior: 'smooth'
 		});
-		
 		// после scrollTo возникнет событие "scroll", так что стрелка автоматически скроется
 	  });
   
@@ -52,5 +48,15 @@ window.addEventListener('load', function(){
 			arrowTop.hidden = true
 		} else arrowTop.hidden = false
 
+		for(let i = links.length - 1; i >= 0; i-- ){
+			let link = links[i];
+			let target = document.querySelector(link.hash)
+			menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
+			link.classList.add('menu__link-active');
+
+			if(posTop > target.offsetTop - 70){
+				break;
+			}
+		}
 	  });
 });
