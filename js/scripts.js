@@ -4,11 +4,15 @@ window.addEventListener('load', function(){
 	let links = menu.querySelectorAll('a') 
 	let arrowTop = document.querySelector('#arrowTop');
 	arrowTop.hidden = true;
-	let scrollTimeout;
+	let lastScroll = 0;
 
 	window.addEventListener('scroll', function(){ 
-		clearTimeout(scrollTimeout);
-		scrollTimeout = setTimeout(onScroll, 200)
+		let current = Date.now();
+		
+		if(current > lastScroll + 100 ){
+			onScroll();
+			lastScroll = current;
+		}
   });
 
   function onScroll (){
@@ -21,10 +25,10 @@ window.addEventListener('load', function(){
 	for(let i = links.length - 1; i >= 0; i-- ){
 		let link = links[i];
 		let target = document.querySelector(link.hash)
-		menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
-		link.classList.add('menu__link-active');
 
-		if(posTop > target.offsetTop - 70){
+		if((posTop + window.innerHeight / 2)  > target.offsetTop){
+			menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
+			link.classList.add('menu__link-active');
 			break;
 		}
 	}
