@@ -3,7 +3,32 @@ window.addEventListener('load', function(){
 	let menu = document.querySelector('.menu');
 	let links = menu.querySelectorAll('a') 
 	let arrowTop = document.querySelector('#arrowTop');
-	arrowTop.hidden = true
+	arrowTop.hidden = true;
+	let scrollTimeout;
+
+	window.addEventListener('scroll', function(){ 
+		clearTimeout(scrollTimeout);
+		scrollTimeout = setTimeout(onScroll, 200)
+  });
+
+  function onScroll (){
+	console.log(1)
+	let posTop = window.pageYOffset;
+	if (posTop < document.documentElement.clientHeight) {
+		arrowTop.hidden = true
+	} else arrowTop.hidden = false
+
+	for(let i = links.length - 1; i >= 0; i-- ){
+		let link = links[i];
+		let target = document.querySelector(link.hash)
+		menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
+		link.classList.add('menu__link-active');
+
+		if(posTop > target.offsetTop - 70){
+			break;
+		}
+	}
+  }
 
 	menu.addEventListener('click', function(e){
 		let link = e.target;
@@ -33,30 +58,11 @@ window.addEventListener('load', function(){
 			/* window.scrollTo(0, pos); */
 		}
 	}
-
 	arrowTop.addEventListener('click', function(){
 		window.scrollTo({
 			top: 0,
 			behavior: 'smooth'
 		});
 		// после scrollTo возникнет событие "scroll", так что стрелка автоматически скроется
-	  });
-  
-	  window.addEventListener('scroll', function() {
-		let posTop = window.pageYOffset;
-		if (posTop < document.documentElement.clientHeight) {
-			arrowTop.hidden = true
-		} else arrowTop.hidden = false
-
-		for(let i = links.length - 1; i >= 0; i-- ){
-			let link = links[i];
-			let target = document.querySelector(link.hash)
-			menu.querySelector('.menu__link-active').classList.remove('menu__link-active');
-			link.classList.add('menu__link-active');
-
-			if(posTop > target.offsetTop - 70){
-				break;
-			}
-		}
 	  });
 });
